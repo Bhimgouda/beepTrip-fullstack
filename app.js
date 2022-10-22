@@ -76,9 +76,6 @@ app.use("/api/campgrounds/:id/reviews", reviewsRouter);
 // *****************Error handling Middlewares**************************
 
 // app.all with a * path means all http verbs on any path...this is why the order matters
-app.all("*", (req, res, next) => {
-  throw new AppError("Invalid Endpoint", 404);
-});
 
 app.use((err, req, res, next) => {
   console.log(err.name);
