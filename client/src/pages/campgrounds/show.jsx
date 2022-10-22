@@ -100,12 +100,13 @@ const ShowCampground = ({ user }) => {
               campground.images.map((image, i) => {
                 return (
                   <Carousel.Item>
-                    <img
-                      style={{ height: 420 }}
-                      className="d-block w-100"
-                      src={image.url.replace("/upload", "/upload/w_550")}
-                      alt=""
-                    />
+                    <div style={{ height: 420 }}>
+                      <img
+                        className="w-100 h-100"
+                        src={image.url.replace("/upload", "/upload/w_550")}
+                        alt=""
+                      />
+                    </div>
                   </Carousel.Item>
                 );
               })}
