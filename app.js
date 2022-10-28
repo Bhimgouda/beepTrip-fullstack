@@ -98,12 +98,8 @@ mongoose
 
 // Serving the Client Side Files
 
-app.use(express.static("client/build"));
-if (process.env.NODE_ENV === "production") {
-  app.get("/*", (req, res) => {
-    res.sendFile(path.resolve(__dirname + ".FRONTEND", "/build", "index.html"));
-  });
-}
+if (process.env.NODE_ENV === "production")
+  app.use(express.static("client/build"));
 
 // Starting the Server
 
