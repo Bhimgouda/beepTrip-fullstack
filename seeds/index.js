@@ -1,10 +1,13 @@
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
 const mongoose = require("mongoose");
 const Campground = require("../models/campground");
 const location = require("./cities");
 const { descriptors, places } = require("./seedHelpers");
 
+const dbUrl = process.env.MONGODB_URI || "mongodb://localhost:27017/beep-trip";
+
 mongoose
-  .connect("mongodb://localhost:27017/beep-trip")
+  .connect(dbUrl)
   .then(() => console.log("SEEDED DATA"))
   .catch((err) => console.log(err));
 
@@ -41,7 +44,7 @@ const seedDB = async () => {
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae laboriosam quia iusto corporis similique recusandae magnam perferendis ipsa nulla id!",
       price,
-      author: "6347c18f974576c08028b737",
+      author: "63c23b3a4f4ef2c858e25462",
     });
     camp.images.forEach((image) => {
       image.thumbnail = image.url.replace("/upload", "/upload/w_100");

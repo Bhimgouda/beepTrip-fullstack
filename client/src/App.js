@@ -5,8 +5,6 @@ import AllCampgrounds from "./pages/campgrounds";
 import ShowCampground from "./pages/campgrounds/show";
 import NewCampground from "./pages/campgrounds/new";
 import EditCampground from "./pages/campgrounds/edit";
-import Navbar from "./components/navbar";
-import Footer from "./components/footer";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NotFound from "./pages/notFound";
@@ -14,6 +12,8 @@ import Register from "./pages/register";
 import Login from "./pages/login";
 import { loginUser } from "./services/user";
 import ProtectedRoute from "./components/protectedRoutes";
+import WithNav from "./pages/WithNav";
+import WithoutNav from "./pages/WithoutNav";
 
 function App() {
   const [user, setUser] = useState({ username: "", password: "", email: "" });
@@ -46,56 +46,56 @@ function App() {
   };
 
   return (
-    <div className="d-flex flex-column vh-100">
-      <Navbar updateUser={updateUser} user={user} />
-      <ToastContainer />
-      <main className="container mt-5 mb-5">
+
+      
         <Routes>
-          <Route path="/" element={<Home />} />
+        <Route element={<WithoutNav />}>
+          <Route path="/" element={<Home user={user} />} />
+        </Route>
+        <Route element={<WithNav updateUser={updateUser} user={user} />}>
           <Route path="/campgrounds" element={<AllCampgrounds />} />
-          <Route
-            path="/campgrounds/:id"
-            element={<ShowCampground user={user} />}
-          />
-          <Route
-            path="/campgrounds/new"
-            element={
-              <ProtectedRoute
-                user={user}
-                element={<NewCampground user={user} />}
-                redirect="/login"
-                updateOrignalPath={updateOrignalPath}
-              />
-            }
-          />
-          <Route
-            path="/campgrounds/:id/edit"
-            element={<EditCampground user={user} />}
-          />
-          <Route path="/not-found" element={<NotFound />} />
-          <Route
-            path="/register"
-            element={
-              <Register
-                updateUser={updateUser}
-                redirect={orignalPath || "/campgrounds"}
-              />
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <Login
-                updateUser={updateUser}
-                redirect={orignalPath || "/campgrounds"}
-              />
-            }
-          />
-          <Route path="*" element={<NotFound />} />
+            <Route
+              path="/campgrounds/:id"
+              element={<ShowCampground user={user} />}
+            />
+            <Route
+              path="/campgrounds/new"
+              element={
+                <ProtectedRoute
+                  user={user}
+                  element={<NewCampground user={user} />}
+                  redirect="/login"
+                  updateOrignalPath={updateOrignalPath}
+                />
+              }
+            />
+            <Route
+              path="/campgrounds/:id/edit"
+              element={<EditCampground user={user} />}
+            />
+            <Route path="/not-found" element={<NotFound />} />
+            <Route
+              path="/register"
+              element={
+                <Register
+                  updateUser={updateUser}
+                  redirect={orignalPath || "/campgrounds"}
+                />
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <Login
+                  updateUser={updateUser}
+                  redirect={orignalPath || "/campgrounds"}
+                />
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Route>  
         </Routes>
-      </main>
-      <Footer />
-    </div>
+
   );
 }
 

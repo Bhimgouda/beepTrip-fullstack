@@ -7,7 +7,7 @@ const Navbar = ({ user, updateUser }) => {
     <nav className="navbar sticky-top navbar-dark navbar-expand-lg bg-dark">
       <div className="container">
         <Link className="navbar-brand" to="/">
-          BeepCamp
+          beepTrip
         </Link>
         <button
           className="navbar-toggler"
