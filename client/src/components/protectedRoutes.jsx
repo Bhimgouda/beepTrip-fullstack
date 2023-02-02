@@ -3,15 +3,19 @@ import { Navigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const ProtectedRoute = ({ element, user, redirect, updateOrignalPath }) => {
-  const orignalPath = useLocation().pathname;
-  useEffect(() => {
-    updateOrignalPath(orignalPath);
-  }, []);
+  // const orignalPath = useLocation().pathname;
+
+  // useEffect(() => {
+  //   updateOrignalPath(orignalPath);
+  // }, []);
+
+  console.log(user)
 
   const redirectWithMessage = () => {
     toast.error("You need to login First", { autoClose: 2000 });
     return <Navigate to={redirect} />;
   };
+  
   return (user.username && element) || redirectWithMessage();
 };
 

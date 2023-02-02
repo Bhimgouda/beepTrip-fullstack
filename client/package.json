@@ -1,5 +1,5 @@
 {
-  "name": "beepTrip-frontend",
+  "name": "beeptrip-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -46,7 +46,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:7000",
   "devDependencies": {
     "@types/bootstrap": "^5.2.5"
   }
