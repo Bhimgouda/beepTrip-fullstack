@@ -10,7 +10,7 @@ export default ({user, updateUser}) => {
       <Navbar updateUser={updateUser} user={user} />
       <div className="d-flex flex-column vh-100">
         <ToastContainer />
-        <main className="container mt-5 mb-5">
+        <main className="container container--app mt-5 mb-5">
         <Outlet />
         </main>
         <Footer />

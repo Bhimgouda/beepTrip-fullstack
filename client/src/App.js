@@ -39,8 +39,6 @@ function App() {
     else setUser({ username: "", password: "", email: "" });
   };
 
-  console.log(user)
-
   // We call this function from protected Router to keep track of users orignal path
   // So that user can be redirected to previous page after login
   const updateOrignalPath = (orignalPath) => {
@@ -48,7 +46,8 @@ function App() {
   };
 
   return (
-        <Routes>
+        <div className="app">
+          <Routes>
         <Route element={<WithoutNav />}>
           <Route path="/" element={<Home user={user} />} />
         </Route>
@@ -95,7 +94,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Route>  
         </Routes>
-
+        </div>
   );
 }
 

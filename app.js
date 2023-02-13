@@ -1,12 +1,11 @@
 // Pending on client side - Validation on all forms
 // Update images functionality has bugs
-if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const path = require("path");
 const mongoose = require("mongoose");
-const AppError = require("./utils/appError");
 const campgroundsRouter = require("./routes/campgrounds");
 const reviewsRouter = require("./routes/reviews");
 const userRouter = require("./routes/user");
@@ -14,7 +13,7 @@ const session = require("express-session");
 const catchAsync = require("./utils/catchAsync");
 const MongoStore = require("connect-mongo");
 
-const dbUrl = process.env.MONGODB_URI || "mongodb://localhost:27017/beep-trip";
+const dbUrl = process.env.MONGODB_URI;
 
 // ****************************** MIDDLEWARES ************************** //
 
@@ -96,18 +95,10 @@ mongoose
     console.log("OH NO!! THERE WAS A PROBLEM WHILE CONNECTING TO THE DATABASE")
   );
 
-// Serving the Client Side Files
 
-if (process.env.NODE_ENV !== "production") {
-  app.use(express.static("client/build"));
-  app.get("/*", function (req, res) {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-  });
-}
 
 // Starting the Server
-
-const PORT = process.env.PORT || 7000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`LISTENING ON PORT ${PORT}`);

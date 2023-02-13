@@ -4,7 +4,7 @@ import Logout from "./../pages/logout";
 
 const Navbar = ({ user, updateUser }) => {
   return (
-    <nav className="navbar sticky-top navbar-dark navbar-expand-lg bg-dark">
+    <nav className="navbar sticky-top navbar-expand-lg navbar-dark  bg-dark">
       <div className="container">
         <Link className="navbar-brand" to="/">
           beepTrip
@@ -32,7 +32,7 @@ const Navbar = ({ user, updateUser }) => {
               Add Campground
             </Link>
           </div>
-          <div className="navbar-nav mr-auto">
+          <div className="navbar-nav">
             {!user.username && (
               <React.Fragment>
                 <Link className="nav-link" to="/login">

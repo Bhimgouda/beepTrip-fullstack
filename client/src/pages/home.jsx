@@ -1,4 +1,3 @@
-import "../css/home.css"
 import Logout from "./logout";
 
 const Home = ({user, updateUser}) => {

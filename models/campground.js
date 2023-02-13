@@ -9,6 +9,7 @@ const ImageSchema = new Schema({
   filename: String,
   thumbnail: String,
 });
+const opts = {toJSON: {virtuals: true}};
 
 const campgroundSchema = new Schema({
   title: String,
@@ -16,6 +17,17 @@ const campgroundSchema = new Schema({
   price: Number,
   description: String,
   location: String,
+  geometry: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true,
+    },
+    coordinates:{
+      type: [Number],
+      required: true,
+    }
+  },
   author: {
     type: Schema.Types.ObjectId,
     ref: "User",
@@ -26,7 +38,18 @@ const campgroundSchema = new Schema({
       ref: "Review",
     },
   ],
-});
+}, opts);
+
+// A Virtual property for Map
+
+campgroundSchema.virtual("properties.popUpMarkup").get(function(){
+  return `
+  <a class=popUp class href="/campgrounds/${this._id}">
+        <img class=popUp__image src="${this.images[0].url}" />
+        <strong>${this.title}</strong>
+  </a>
+  `
+})
 
 campgroundSchema.post("findOneAndDelete", async (camp) => {
   if (camp) {

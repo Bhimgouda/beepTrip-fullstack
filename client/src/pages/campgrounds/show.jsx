@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { showCampground } from "../../services/campgroundsService";
@@ -9,6 +9,11 @@ import { DeleteReview, postReviews } from "../../services/reviews";
 import { toast } from "react-toastify";
 import "../../css/stars.css";
 import Carousel from "react-bootstrap/Carousel";
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+// Changes on production (not sure)
+mapboxgl.accessToken="pk.eyJ1IjoiYmhpbWdvdWRhcGF0aWw1MTEiLCJhIjoiY2xkeGZ2cWlzMDJhdzN2azl4d3Nlbm9tOSJ9.SJbaD0axBqerx0R3bYmxew"
 
 const ShowCampground = ({ user }) => {
   const [campground, setcampground] = useState({});
@@ -21,11 +26,38 @@ const ShowCampground = ({ user }) => {
       try {
         const { data: campgroundData } = await showCampground(id);
         setcampground(campgroundData);
-      } catch (e) {
+
+        const map = new mapboxgl.Map({
+          container: 'map', // container ID
+          style: 'mapbox://styles/mapbox/light-v10', // style URL
+          center: campgroundData.geometry.coordinates, // starting position [lng, lat]
+          zoom: 9, // starting zoom
+        });
+
+        map.addControl(new mapboxgl.NavigationControl())
+
+        const marker = new mapboxgl.Marker()
+          .setLngLat(campgroundData.geometry.coordinates)
+          .addTo(map)
+          .setPopup(
+            new mapboxgl.Popup({offset:25})
+              .setHTML(
+                `
+                <h4 style="margin-top:8px">${campground.title}</h4>
+                <p style="margin: 0">${campground.location}</p>
+                `
+              )
+          )
+            
+          
+        } catch (e) {
         navigate("/not-found");
       }
     }
     get();
+
+
+
   }, []);
 
   const showAuthorizedBtns = () => {
@@ -93,13 +125,14 @@ const ShowCampground = ({ user }) => {
   return (
     <div className="row">
       <div className="col-6">
+      
         <div className="card mb-3">
           <Carousel>
             {campground.images &&
               campground.images &&
               campground.images.map((image, i) => {
                 return (
-                  <Carousel.Item>
+                  <Carousel.Item key={i}>
                     <div style={{ height: 420 }}>
                       <img
                         className="w-100 h-100"
@@ -130,6 +163,10 @@ const ShowCampground = ({ user }) => {
         </div>
       </div>
       <div className="col-6">
+
+              
+      <div id="map" className="map"></div>
+
         {user.username && (
           <ReviewsForm handleReviewSubmit={handleReviewSubmit} />
         )}
